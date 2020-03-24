@@ -1,6 +1,10 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const { pokemon } = require('./pokedex.json');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /* VERBOS
     GET - Obtener recursos
@@ -16,6 +20,10 @@ const { pokemon } = require('./pokedex.json');
 
 app.get("/", (req, res, next) =>{
     return res.status(200).send("Bienvenido al Pokedex");
+});
+
+app.post("/pokemon/", (req, res, next) => {
+    return res.status(200).send(req.body);
 });
 
 app.get("/pokemon/", (req, res, next) =>{

@@ -10,19 +10,19 @@ pokemon.post("/", (req, res, next) => {
 //DEVUELVE UNA LISTA DE TODOS LOS POKEMON POR GET
 pokemon.get("/", async (req, res, next) => {
     const pkmn = await db.query("SELECT * FROM pokemon");
-    return res.status(200).json(pkmn);
+    return res.status(200).json({code: 1, message: pkmn});
 });
 
 //DEVUELVE LOS POKEMON QUE COINCIDA CON EL ID SOLICITADO
 pokemon.get("/:id([0-9]{1,3})", async (req, res, next) => {
   const result = await db.query('SELECT * FROM pokemon WHERE pok_id = ?', [req.params.id]);
-  (!result.length) ? res.status(404).send("Pokemon no encontrado") : res.status(202).json(result.pop());
+  (!result.length) ? res.status(404).json({ code: 404, message: "Pokemon no encontrado" }) : res.status(202).json({ code: 1, message: result.pop() });
 });
 
 //DEVUELVE LOS POKEMON CUYO NOMBRE COINCIDA CON EL SOLICITADO
 pokemon.get("/:name([A-Za-z]+)", async (req, res, next) => {
     const result = await db.query('SELECT * FROM pokemon WHERE UPPER(pok_name) = ?', [req.params.name.toUpperCase()]);
-    (!result.length) ? res.status(404).send("Pokemon no encontrado") : res.status(202).json(result.pop());
+    (!result.length) ? res.status(404).json({ code: 404, message: "Pokemon no encontrado" }) : res.status(202).json({ code: 1, message: result.pop() });
 });
 
 

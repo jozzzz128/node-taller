@@ -29,7 +29,6 @@ pokemon.put("/:id([0-9]{1,3})", async (req, res, next) => {
         const rows = await db.query(query);
         (rows.affectedRows == 1) ? res.status(201).json({ code: 201, message: "Pokemon actualizado correctamente" }) : res.status(500).json({ code: 500, message: "Ocurrio un error" });
     }
-
     return res.status(500).json({ code: 500, message: "Campos incompletos"});
 });
 
